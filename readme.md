@@ -1,0 +1,1 @@
+[additional compliance tests](https://github.com/replikativ/konserve/tree/main/test/konserve) for konserve implementors as a dependency

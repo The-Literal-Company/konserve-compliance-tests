@@ -1,0 +1,2 @@
+{:paths ["src"]
+ :deps {io.replikativ/konserve {:mvn/version "0.7.315"}}}
