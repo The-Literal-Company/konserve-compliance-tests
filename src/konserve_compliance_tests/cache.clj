@@ -1,9 +1,8 @@
 (ns konserve-compliance-tests.cache
-  (:require [clojure.core.async :refer [go <! promise-chan put! take!]]
-            [clojure.test :refer [deftest is]]
+  (:require [clojure.core.async :refer [go <!]]
+            [clojure.test :refer [is]]
             [fress.api :as fress]
-            [konserve.cache :as kc]
-            #?(:cljs [fress.util :refer [byte-array]])))
+            [konserve.cache :as kc]))
 
 (defn test-cached-PEDNKeyValueStore-async [store]
   (go
@@ -50,11 +49,9 @@
         data [:this/is
               'some/fressian
               "data 😀😀😀"
-              #?(:cljs (js/Date.) :clj (java.util.Date.))
+              (java.util.Date.)
               #{true false nil}]
-        bytes #?(:cljs (fress/write data)
-                 :clj (.array (fress/write data)))
-        bytes-ch (promise-chan)]
+        bytes (.array (fress/write data))]
     (go
       (and
        (is (true? (<! (kc/bassoc store :key bytes {:sync? false}))))

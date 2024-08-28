@@ -2,7 +2,7 @@
   "gc/sweep! is async only"
   (:require [clojure.core.async :refer [go] :as a]
             [clojure.test :refer [deftest is testing]]
-            #?(:cljs [fress.util :refer [byte-array]])
+            [fress.util :refer [byte-array]]
             [konserve.core :as k]
             [konserve.gc :as gc]
             [superv.async :refer [<?-]]))
@@ -15,7 +15,7 @@
      (<?- (k/assoc-in store [:foo2] :bar2))
      (<?- (k/assoc-in store [:foo3] :bar2))
      (let [_ (a/<! (a/timeout 10))
-           ts        #?(:cljs (js/Date.) :clj (java.util.Date.))
+           ts (js/Date.)
            whitelist #{:baz}]
        (a/<! (a/timeout 10))
        (and
