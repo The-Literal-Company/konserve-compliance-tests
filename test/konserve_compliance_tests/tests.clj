@@ -3,12 +3,17 @@
   (:require [clojure.test :refer [deftest]]
             [clojure.core.async :refer [<!! go] :as async]
             [konserve.core :refer [bassoc bget keys]]
-            [konserve.compliance-test :refer [compliance-test]]
             [konserve.filestore :refer [connect-fs-store delete-store]]
             [konserve-compliance-tests.cache :as ct]
+            [konserve-compliance-tests.core :refer [compliance-test]]
             [konserve-compliance-tests.encryptor :as et]
             [konserve-compliance-tests.gc :as gct]
             [konserve-compliance-tests.serializers :as st]))
+
+(deftest sync-cloud-storage-compliance-test
+  (delete-store "/tmp/filestore-compliance-test")
+  (let [store (connect-fs-store "/tmp/filestore-compliance-test" :opts {:sync? true})]
+    (compliance-test store)))
 
 #!============
 #! Cache tests
